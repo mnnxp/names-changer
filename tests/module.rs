@@ -1,22 +1,6 @@
 #[cfg(test)]
 mod tests {
     use names_changer::*;
-    use names_changer::temp::NamesChanger;
-
-    #[test]
-    fn check_next_data() {
-        let contents = "\
-/* перечень типов изменений */
-CREATE TABLE TypeOfChangeRef (
-  id integer NOT NULL, /* id типа изменения */";
-        let good_content = "\
-/* перечень типов изменений */
-CREATE TABLE type_of_change_ref (
-  id integer NOT NULL, /* id типа изменения */";
-
-
-        assert_eq!(good_content, NamesChanger::to_changer_name(contents));
-    }
 
     #[test]
     fn check_return_data() {
@@ -48,7 +32,7 @@ COMMENT ON COLUMN client_tokens_ref.id IS 'id токена';
 COMMENT ON COLUMN client_tokens_ref.id_client IS 'идентификатор пользователя';";
 
 
-        assert_eq!(good_content, camel_to_snake(&contents));
+        assert_eq!(good_content, NamesChanger::to_changer_name(contents));
     }
 
     #[test]
