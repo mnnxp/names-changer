@@ -1,7 +1,8 @@
-mod temp;
+pub mod temp;
 
 use case::CaseExt;
-use regex::Regex;
+use regex::{Regex, Captures};
+use std::borrow::Cow;
 
 pub fn camel_to_snake(contents: &str) -> String {
     let re =
@@ -35,14 +36,6 @@ pub fn camel_to_snake(contents: &str) -> String {
     }
 
     let result:String = result.join("\n");
-
-    result
-}
-
-pub fn next_camel_to_snake(contents: &str) -> String {
-
-
-    let result = String::from("\n");
 
     result
 }
