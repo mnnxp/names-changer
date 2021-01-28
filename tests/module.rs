@@ -1,6 +1,13 @@
 #[cfg(test)]
 mod tests {
     use names_changer::*;
+    #[test]
+    fn test_name_change() {
+        let content = "TABLE ClientTokensRef IS 'text';";
+        let change_content = content.camel_to_snack();
+
+        assert_eq!("TABLE client_tokens_ref IS 'text';", change_content)
+    }
 
     #[test]
     fn check_return_data() {
@@ -32,7 +39,7 @@ COMMENT ON COLUMN client_tokens_ref.id IS 'id токена';
 COMMENT ON COLUMN client_tokens_ref.id_client IS 'идентификатор пользователя';";
 
 
-        assert_eq!(good_content, NamesChanger::to_changer_name(contents));
+        assert_eq!(good_content, NamesChanger::camel_to_snack(contents));
     }
 
     #[test]

@@ -1,14 +1,3 @@
-#![feature(test)]
-
-extern crate test;
-
-use names_changer::*;
-use test::Bencher;
-use std::fs;
-
-#[bench]
-fn bench_camel_to_snake_of_str(b: &mut Bencher) {
-    let contents = "\
 /* перечень типов изменений */
 CREATE TABLE TypeOfChangeRef (
   id integer NOT NULL, /* id типа изменения */
@@ -20,14 +9,4 @@ ALTER TABLE FileRef ADD CONSTRAINT FileRef_fk1 FOREIGN KEY (idClientCreate) REFE
 ALTER TABLE FileRef ADD CONSTRAINT FileRef_fk2 FOREIGN KEY (idExt) REFERENCES ExtensionRef(id);
 COMMENT ON TABLE ClientTokensRef IS 'токен сессии клиента';
 COMMENT ON COLUMN ClientTokensRef.id IS 'id токена';
-COMMENT ON COLUMN ClientTokensRef.idClient IS 'идентификатор пользователя';";
-
-    b.iter(|| NamesChanger::camel_to_snack(contents));
-}
-
-#[bench]
-fn bench_camel_to_snake_of_file(b: &mut Bencher) {
-    let contents = fs::read_to_string("test.txt").unwrap();
-
-    b.iter(|| NamesChanger::camel_to_snack(contents.as_str()));
-}
+COMMENT ON COLUMN ClientTokensRef.idClient IS 'идентификатор пользователя';
