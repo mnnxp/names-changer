@@ -10,7 +10,7 @@ description = """
 Convert a names of sql schemes from camelcase to snake case.
 """
 keywords = ["text", "name", "changer", "parser"]
-categories = ["algorithms", "Text processing", "SQL", "Parsing tools"]
+categories = ["text-processing", "data-structures", "parser-implementations"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
