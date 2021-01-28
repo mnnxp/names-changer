@@ -1,22 +1,8 @@
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use names_changer::camel_to_snake;
-
-    #[test]
-    fn check_return_data() {
-        let contents = "\
-/* перечень типов изменений */
-CREATE TABLE TypeOfChangeRef (
-  id integer NOT NULL, /* id типа изменения */";
-        let good_content = "\
-/* перечень типов изменений */
-CREATE TABLE type_of_change_ref (
-  id integer NOT NULL, /* id типа изменения */";
+    use names_changer::*;
 
 
-        assert_eq!(good_content, camel_to_snake(&contents));
-    }
 
     #[test]
     fn check_return_data() {
