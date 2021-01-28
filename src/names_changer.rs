@@ -4,7 +4,7 @@ use regex::Regex;
 pub trait NamesChanger {
     type Owned;
 
-    /// Convert a names of sql file from camel case to snake case.
+    /// Convert a names of sql schemes from camelcase to snake case.
     ///
     /// # Examples
     ///
