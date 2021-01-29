@@ -5,7 +5,7 @@
 // except according to those terms.
 //! # Overview
 //! Taking data as str.
-//! This crate `#[names_changer]` provides trait method `.camel_to_snack()` that convert a names from camel case to snake case.
+//! This crate `#[names_changer]` provides trait method `.camel_to_snake()` that convert a names from camel case to snake case.
 //! The trait searches for words matching the pattern and converts them to snake case.
 //!
 //! # Getting Started
@@ -14,7 +14,7 @@
 //!
 //! ```toml
 //! [dev-dependencies]
-//! names-changer = "0.1.0"
+//! names-changer = "0.2.0"
 //! ```
 //!
 //! Additionally, you have to import the procedural macro with `use` statement:
@@ -36,7 +36,7 @@
 //!     #[test]
 //!     fn test_name_change() {
 //!         let content = "TABLE ClientTokensRef IS 'text';";
-//!         let change_content = content.camel_to_snack();
+//!         let change_content = content.camel_to_snake();
 //!
 //!         assert_eq!("TABLE client_tokens_ref IS 'text';", change_content)
 //!     }
