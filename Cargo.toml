@@ -17,4 +17,4 @@ edition = "2018"
 
 [dependencies]
 regex = "1"
-case = "1.0.0"
+heck = "0.3.2"
