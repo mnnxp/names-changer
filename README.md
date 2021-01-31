@@ -41,7 +41,6 @@ mod tests {
 }
  ```
 
-<<<<<<< HEAD
 =======
 ### What's new
 0.2.0
@@ -60,7 +59,6 @@ Cons: requires a lot of resources, not optimized.
  - add asynchronous processing?
 
 
->>>>>>> 076dad6ddfe4170e2c3b9e9b35ae356b56b14b04
 ### License
 
 This project is licensed under either of
@@ -72,4 +70,3 @@ This project is licensed under either of
   https://opensource.org/licenses/MIT)
 =======
   https://opensource.org/licenses/MIT)
->>>>>>> 076dad6ddfe4170e2c3b9e9b35ae356b56b14b04
