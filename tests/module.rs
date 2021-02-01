@@ -43,6 +43,14 @@ mod tests {
     }
 
     #[test]
+    fn check_change_words_in_word() {
+        let content = "ALTER ClientRef(id) REFERENCES";
+        let change_content = content.camel_to_snake();
+
+        assert_eq!("ALTER client_ref(id) REFERENCES", change_content)
+    }
+
+    #[test]
     fn check_change_full_data() {
         let contents = "\
 /* перечень типов изменений */
@@ -69,8 +77,4 @@ COMMENT (id_cad_name_cad) ON TABLE business_to_client IS 'commented';";
         assert_eq!(good_content, NamesChanger::camel_to_snake(contents));
     }
 
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
 }
