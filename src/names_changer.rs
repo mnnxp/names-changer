@@ -84,6 +84,7 @@ impl NamesChanger for str {
     }
 }
 
+// обработка нескольких слов разделённых спец.знаками
 fn new_words_of_word(slice: &str, flag: bool) -> String {
     let re_custom_word =
         Regex::new(r"(?P<not_word1>[\W0-9a-z_]*[_]*)(?P<word1>[a-zA-Z0-9-]*)(?P<not_word2>[_]*[\W0-9a-z_]*[_]*)(?P<word2>[a-zA-Z0-9-]*)(?P<next_text>.*)")
@@ -94,38 +95,45 @@ fn new_words_of_word(slice: &str, flag: bool) -> String {
 
     let mut update_word = String::new();
 
-    if true {
-        let not_word1 = &re_custom_word.replace(slice,
-                                                caps.name("not_word1").unwrap().as_str());
-        update_word.push_str(not_word1);
+    // обработка первой группы символов
+    let not_word1 = &re_custom_word.replace(slice,
+                                            caps.name("not_word1").unwrap().as_str());
+    update_word.push_str(not_word1);
 
-        if flag && re_add_char.is_match(slice) && re_add_char.is_match(not_word1) {
-            update_word.push_str("_");
+    if flag && re_add_char.is_match(slice) && re_add_char.is_match(not_word1) {
+        update_word.push_str("_");
+    }
+
+
+    // обработка первого слова в полученном отрезке
+    let rep_word1 = &re_custom_word.replace(slice,
+                                            caps.name("word1").unwrap().as_str());
+    update_word.push_str(rep_word1.to_snake_case().as_str());
+
+    // обработка второй группы символов
+    let not_word2 = &re_custom_word.replace(slice,
+                                            caps.name("not_word2").unwrap().as_str());
+    update_word.push_str(not_word2);
+
+    // обработка второго слова в полученном отрезке
+    let rep_word2 = &re_custom_word.replace(slice,
+                                            caps.name("word2").unwrap().as_str());
+    let rep_word2 = match_word(rep_word2);
+    update_word.push_str(&rep_word2);
+
+    // обработка последнего участка отрезка, если есть функция - функция вызывается рекурсивно
+    if Regex::new(r"([a-zA-Z0-9-_]*[A-Z]+[a-zA-Z0-9-_]*)").unwrap().is_match(caps.name("next_text").unwrap().as_str()) {
+        let mut next_text = &re_custom_word.replace(slice,
+                                                    caps.name("next_text").unwrap().as_str());
+
+        if Regex::new(r"([a-zA-Z0-9-]+)").unwrap().is_match(next_text) {
+            let next_text = match_word(next_text);
+            update_word.push_str(&next_text);
+        } else {
+            update_word.push_str(&next_text);
         }
 
-    }
-    if true {
-        let rep_word1 = &re_custom_word.replace(slice,
-                                                caps.name("word1").unwrap().as_str());
-        update_word.push_str(rep_word1.to_snake_case().as_str());
-    }
-    if true {
-        let not_word2 = &re_custom_word.replace(slice,
-                                                caps.name("not_word2").unwrap().as_str());
-        update_word.push_str(not_word2);
-    }
-    if true {
-        let rep_word2 = &re_custom_word.replace(slice,
-                                                caps.name("word2").unwrap().as_str());
-        let rep_word2 = match_word(rep_word2);
-        update_word.push_str(&rep_word2);
-    }
-    if Regex::new(r"([a-zA-Z0-9-_]*[A-Z]+[a-zA-Z0-9-_]*)").unwrap().is_match(caps.name("next_text").unwrap().as_str()) {
-        let next_text = &re_custom_word.replace(slice,
-                                                caps.name("next_text").unwrap().as_str());
-        let next_text = match_word(next_text);
-        update_word.push_str(&next_text);
-
+        // возвращяем конец строки отрезок, который не нужнается в обработке
         if flag && re_end_word.is_match(slice)  {
             let end_word = &re_end_word.captures(slice).unwrap();
             update_word.push_str(&end_word[0]);

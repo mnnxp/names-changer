@@ -24,10 +24,3 @@ COMMENT ON COLUMN ClientTokensRef.idClient IS 'идентификатор пол
 
     b.iter(|| NamesChanger::camel_to_snake(contents));
 }
-
-#[bench]
-fn bench_camel_to_snake_of_file(b: &mut Bencher) {
-    let contents = fs::read_to_string("test.txt").unwrap();
-
-    b.iter(|| NamesChanger::camel_to_snake(contents.as_str()));
-}
