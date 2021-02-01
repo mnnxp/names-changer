@@ -3,7 +3,7 @@ names-changer
 Convert a names of sql schemes from camelcase to snake case.
 
  Taking data as str.
- This crate `#[names_changer]` provides trait method `.camel_to_snack()` that convert a names from camel case to snake case.
+ This crate `#[names_changer]` provides trait method `.camel_to_snake()` that convert a names from camel case to snake case.
  The trait searches for words matching the pattern and converts them to snake case.
 
 ### Getting Started
@@ -41,6 +41,26 @@ mod tests {
 }
  ```
 
+<<<<<<< HEAD
+=======
+### What's new
+0.2.0
+  - fixed bug with method name
+  - added recursive processing of segments without spaces: 
+from "(ClientRefA (ClientRefB (ClientRefC ((ClientRefE (id)))))" 
+we get "(client_ref_a (client_ref_b (client_ref_c ((client_ref_e (id)))))"
+  - added tests
+  - ```case``` crate (the have problems with abbreviations) replaced with ```heck```
+
+Cons: requires a lot of resources, not optimized.
+
+### Todos
+ - fix warning
+ - optimize code
+ - add asynchronous processing?
+
+
+>>>>>>> 076dad6ddfe4170e2c3b9e9b35ae356b56b14b04
 ### License
 
 This project is licensed under either of
@@ -48,4 +68,8 @@ This project is licensed under either of
 * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
   https://www.apache.org/licenses/LICENSE-2.0)
 * MIT license ([LICENSE-MIT](LICENSE-MIT) or
+<<<<<<< HEAD
   https://opensource.org/licenses/MIT)
+=======
+  https://opensource.org/licenses/MIT)
+>>>>>>> 076dad6ddfe4170e2c3b9e9b35ae356b56b14b04
