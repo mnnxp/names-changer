@@ -125,13 +125,12 @@ fn new_words_of_word(slice: &str, flag: bool) -> String {
                                                 caps.name("next_text").unwrap().as_str());
         let next_text = match_word(next_text);
         update_word.push_str(&next_text);
-    }
 
-    //TODO: починить обрыв конца строки re_end_word
-    // if flag && re_end_word.is_match(slice)  {
-    //     let end_word = &re_end_word.captures(slice).unwrap();
-    //     update_word.push_str(&end_word[0]);
-    // }
+        if flag && re_end_word.is_match(slice)  {
+            let end_word = &re_end_word.captures(slice).unwrap();
+            update_word.push_str(&end_word[0]);
+        }
+    }
 
     return update_word;
 }
