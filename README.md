@@ -76,6 +76,7 @@ mod tests {
 
 0.2.1
   - fixed bug with skipping small words, i.e. "idExt", "idEx", "dE".
+
 0.2.0
   - fixed bug with method name
   - added recursive processing of segments without spaces: 
