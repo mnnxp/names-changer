@@ -6,6 +6,7 @@ Convert a names of sql schemes from camelcase to snake case.
  This crate `#[names_changer]` provides trait method `.camel_to_snake()` that convert a names from camel case to snake case.
  The trait searches for words matching the pattern and converts them to snake case.
 
+
 ### Getting Started
 
  First of all you have to add this dependency to your `Cargo.toml`:
@@ -20,6 +21,7 @@ Convert a names of sql schemes from camelcase to snake case.
  ```rust
  use names_changer::NamesChanger;
  ```
+
 
 ### Example usage:
 
@@ -40,10 +42,38 @@ mod tests {
     }
 }
  ```
+
+
 ### Why is it?
-This for update old sql schems with names include of upper case e.g.
+
+This for update old sql schemes with names include of upper case e.g.
+ ```rust
+ #[cfg(test)]
+mod tests {
+    use names_changer::NamesChanger;
+
+    // Not needed for this example, but useful in general
+    use super::*;
+
+    #[test]
+    fn test_names_changer_to_snake_case() {
+        let content = "TABLE ClientTokensRef IS 'text';";
+        
+        assert_eq!("TABLE client_tokens_ref IS 'text';", content.camel_to_snake())
+    }
+
+    #[test]
+    fn test_classic_to_snake_case() {
+        let content = "TABLE ClientTokensRef IS 'text';";
+
+        assert_eq!("table_client_tokens_ref_is_text", content.to_snake_case()())
+    }
+}
+ ```
+
 
 ### What's new
+
 0.2.1
   - fixed bug with skipping small words, i.e. "idExt", "idEx", "dE".
 0.2.0
@@ -56,7 +86,9 @@ we get "(client_ref_a (client_ref_b (client_ref_c ((client_ref_e (id)))))"
 
 Cons: requires a lot of resources, not optimized.
 
+
 ### Todos
+
  - fix warning
  - optimize code
  - add asynchronous processing?

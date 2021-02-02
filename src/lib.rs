@@ -36,9 +36,8 @@
 //!     #[test]
 //!     fn test_name_change() {
 //!         let content = "TABLE ClientTokensRef IS 'text';";
-//!         let change_content = content.camel_to_snake();
 //!
-//!         assert_eq!("TABLE client_tokens_ref IS 'text';", change_content)
+//!         assert_eq!("TABLE client_tokens_ref IS 'text';", content.camel_to_snake())
 //!     }
 //! }
 //! ```
