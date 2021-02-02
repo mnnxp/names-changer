@@ -51,9 +51,7 @@ This for update old sql schemes with names include of upper case e.g.
  #[cfg(test)]
 mod tests {
     use names_changer::NamesChanger;
-
-    // Not needed for this example, but useful in general
-    use super::*;
+    use heck::SnakeCase;
 
     #[test]
     fn test_names_changer_to_snake_case() {
