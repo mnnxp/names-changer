@@ -11,8 +11,8 @@ pub trait NamesChanger {
     /// ```
     /// use names_changer::NamesChanger;
     ///
-    /// assert_eq!(&"bus WildUnderscoreS oby martinLutherStringJr 言語".camel_to_snake(),
-    /// "bus wild_underscore_s oby martin_luther_string_jr 言語");
+    /// assert_eq!(&"TABLE ClientTokensRef IS 'text';".camel_to_snake(),
+    /// "TABLE client_tokens_ref IS 'text';");
     /// ```
     fn camel_to_snake(&self) -> Self::Owned;
 }
