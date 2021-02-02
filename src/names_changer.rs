@@ -1,6 +1,5 @@
 use heck::SnakeCase;
 use regex::Regex;
-use std::convert::TryInto;
 
 pub trait NamesChanger {
     type Owned;
@@ -23,12 +22,10 @@ impl NamesChanger for str {
 
     fn camel_to_snake(&self) -> String {
         let re_word_for_change =
-            Regex::new(r"([a-z]?[a-z]*[A-Z]+[a-z]+[A-Z]?[a-zA-Z0-9-]+[^\W])")
+            Regex::new(r"([a-z0-9-_]+[A-Z]+)|([A-Z]+[a-z0-9-_]+)")
                 .unwrap();
         let re_word_to_word =
-            //Regex::new(r"([\w][2][a-zA-Z])")
-            //Regex::new(r"([a-z])([2][_])([a-z])")
-            Regex::new(r"(?P<word1>[a-z]+)(?P<to1>[2])(?P<word2>[a-z_]+)")
+            Regex::new(r"(?P<word1>[a-z]+)(?P<to1>[2])(?P<word2>[_][a-z]+)")
                 .unwrap();
         let re_non_any_word =
             Regex::new(r"([^a-zA-Z0-9-_])")
@@ -53,32 +50,27 @@ impl NamesChanger for str {
                         }
                         _ => change_word = change_word.to_snake_case(),
                     };
-
-                    // searching "2_" in word received of word "Text2Text"
-                    // for change to "text_to_text"
                     if re_word_to_word.is_match(&change_word) {
-                        //let rep_word = &re_word_to_word.replace(&change_word.as_str(), "$to1");
-                        //change_word = change_word.replace("2_", "_to_");
                         let new_word = &re_word_to_word.replace(&change_word,
                                             format!("{} _to{}", "$word1", "$word2").as_str());
                         let new_word = new_word.replace(" ", "");
-                        //let new_word = new_word.replace("-", "_");
                         change_word = new_word.to_string();
                     }
-                    //println!("TRUE: {}", w);
-
                 } else {
                     change_word = word.to_string();
                 }
+
                 change_line.push_str(&change_word);
                 flag = true;
             }
-            //println!("TRUE: {}", l);
-            //println!("With text:\n{:#?}", result);
             result.push(change_line);
         }
 
-        let result:String = result.join("\n");
+        let mut result:String = result.join("\n");
+
+        if Regex::new(r"[-]").unwrap().is_match(&result) {
+            result = result.replace("-", "_");
+        }
 
         result
     }
@@ -104,7 +96,6 @@ fn new_words_of_word(slice: &str, flag: bool) -> String {
         update_word.push_str("_");
     }
 
-
     // обработка первого слова в полученном отрезке
     let rep_word1 = &re_custom_word.replace(slice,
                                             caps.name("word1").unwrap().as_str());
@@ -121,9 +112,9 @@ fn new_words_of_word(slice: &str, flag: bool) -> String {
     let rep_word2 = match_word(rep_word2);
     update_word.push_str(&rep_word2);
 
-    // обработка последнего участка отрезка, если есть функция - функция вызывается рекурсивно
+    // обработка конца отрезка, если там есть слово для обработки - функция вызывается рекурсивно
     if Regex::new(r"([a-zA-Z0-9-_]*[A-Z]+[a-zA-Z0-9-_]*)").unwrap().is_match(caps.name("next_text").unwrap().as_str()) {
-        let mut next_text = &re_custom_word.replace(slice,
+        let next_text = &re_custom_word.replace(slice,
                                                     caps.name("next_text").unwrap().as_str());
 
         if Regex::new(r"([a-zA-Z0-9-]+)").unwrap().is_match(next_text) {
@@ -149,8 +140,6 @@ fn match_word(text_word: &str) -> String {
             .is_match(x) => {
             new_words_of_word(x, false)
         },
-        //Some(x @ 6..=10) => "ewfwef",
-        // all other numbers
         _ => text_word.to_string(),
     }
 }

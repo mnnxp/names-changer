@@ -14,7 +14,7 @@
 //!
 //! ```toml
 //! [dev-dependencies]
-//! names-changer = "0.2.0"
+//! names-changer = "0.2.1"
 //! ```
 //!
 //! Additionally, you have to import the procedural macro with `use` statement:

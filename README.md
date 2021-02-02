@@ -12,7 +12,7 @@ Convert a names of sql schemes from camelcase to snake case.
 
  ```toml
  [dev-dependencies]
- names-changer = "0.2.0"
+ names-changer = "0.2.1"
  ```
 
  Additionally, you have to import the procedural macro with `use` statement:
@@ -40,8 +40,12 @@ mod tests {
     }
 }
  ```
+### Why is it?
+This for update old sql schems with names include of upper case e.g.
 
 ### What's new
+0.2.1
+  - fixed bug with skipping small words, i.e. "idExt", "idEx", "dE".
 0.2.0
   - fixed bug with method name
   - added recursive processing of segments without spaces: 

@@ -1,6 +1,54 @@
 #[cfg(test)]
 mod tests {
     use names_changer::*;
+
+    macro_rules! t {
+        ($t:ident : $s1:expr => $s2:expr) => {
+            #[test]
+            fn $t() {
+                assert_eq!($s1.camel_to_snake(), $s2)
+            }
+        }
+    }
+
+    t!(test1: "CamelCase" => "camel_case");
+    // test2 different from typical camel to snake
+    t!(test2: "idExt idEx dE" => "id_ext id_ex d_e");
+    t!(test3: "MixedUP CamelCase, with some Spaces" => "mixed_up camel_case, with some spaces");
+    // test4 different from typical camel to snake
+    t!(test4: "mixed_up_ snake_case with some _spaces" => "mixed_up_ snake_case with some _spaces");
+    t!(test5: "kebab-case" => "kebab_case");
+    t!(test6: "SHOUTY_SNAKE_CASE" => "shouty_snake_case");
+    t!(test7: "snake_case" => "snake_case");
+    // test8 different from typical camel to snake
+    t!(test8: "this-contains_ ALLKinds OfWord_Boundaries" => "this_contains_ all_kinds of_word_boundaries");
+    // test9 different from typical camel to snake
+    t!(test9: "XΣXΣ baﬄe" => "XΣXΣ baﬄe");
+    t!(test10: "XMLHttpRequest" => "xml_http_request");
+    t!(test11: "FIELD_NAME11" => "field_name11");
+    t!(test12: "99BOTTLES" => "99bottles");
+    t!(test13: "FieldNamE11" => "field_nam_e11");
+
+    t!(test14: "abc123def456" => "abc123def456");
+    t!(test16: "abc123DEF456" => "abc123_def456");
+    t!(test17: "abc123Def456" => "abc123_def456");
+    t!(test18: "abc123DEf456" => "abc123_d_ef456");
+    t!(test19: "ABC123def456" => "abc123def456");
+    t!(test20: "ABC123DEF456" => "abc123def456");
+    t!(test21: "ABC123Def456" => "abc123_def456");
+    t!(test22: "ABC123DEf456" => "abc123d_ef456");
+    t!(test23: "ABC123dEEf456FOO" => "abc123d_e_ef456_foo");
+    t!(test24: "abcDEF" => "abc_def");
+    t!(test25: "ABcDE" => "a_bc_de");
+
+    #[test]
+    fn check_small_word() {
+        let content = "idExt idEx dE";
+        let change_content = content.camel_to_snake();
+
+        assert_eq!("id_ext id_ex d_e", change_content)
+    }
+
     #[test]
     fn check_classic_camel_word_change() {
         let content = "TABLE ClientTokensRef IS 'text';";
