@@ -64,7 +64,7 @@ mod tests {
     fn test_classic_to_snake_case() {
         let content = "TABLE ClientTokensRef IS 'text';";
 
-        assert_eq!("table_client_tokens_ref_is_text", content.to_snake_case()())
+        assert_eq!("table_client_tokens_ref_is_text", content.to_snake_case())
     }
 }
  ```
